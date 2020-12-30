@@ -22,6 +22,7 @@ export function Marker(doc, id, isLogin) {
         if (type === 'boss') {
           circles.push(Circle(doc, 50, 'white'));
           circles.push(Circle(doc, 100, 'darkorange'));
+					circles.push(Circle(doc, 150, 'red'));
         }
 
         return new L.marker(doc.geometry.coordinates, {
@@ -30,19 +31,26 @@ export function Marker(doc, id, isLogin) {
           }),
           draggable: isLogin
         })
-          .on('mouseover', () => {
+          .on('click', () => {
             if (type === 'boss') {
-              circles.forEach(c => c.addTo(this.groups[doc.properties.title]));
+							const g = this.groups[doc.properties.title]
+              circles.forEach(c => {
+								if (g.hasLayer(c)) {
+									g.removeLayer(c);
+								} else {
+									c.addTo(g);
+								}
+							});
             }
           })
-          .on('mouseout', () => {
-            if (type === 'boss') {
-              circles.forEach(c => c.remove());
-            }
-          })
-          .on('click', () => console.log('Marker id = ', id))
-          .bindPopup(L.responsivePopup().setContent(new PopupText().show(id, doc.properties)))
-          .bindTooltip(t('types', doc.properties.title));
+          // .on('mouseout', () => {
+          //   if (type === 'boss') {
+          //     circles.forEach(c => c.remove());
+          //   }
+          // })
+          // .on('click', () => console.log('Marker id = ', id))
+          // .bindPopup(L.responsivePopup().setContent(new PopupText().show(id, doc.properties)))
+          // .bindTooltip(t('types', doc.properties.title));
 
         break;
     }

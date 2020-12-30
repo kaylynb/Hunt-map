@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.9.2",
-    "firebase": "6.0.2",
+    "firebase": "^8.2.1",
     "firebaseui": "4.0.0",
     "leaflet": "1.5.1",
     "leaflet-draw": "^1.0.4",
